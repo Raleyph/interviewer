@@ -40,8 +40,8 @@ class User(Entity):
 
     # factory
 
-    @staticmethod
-    def create():
+    @classmethod
+    def create(cls):
         pass
 
     # business logic
