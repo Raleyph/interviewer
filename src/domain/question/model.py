@@ -1,0 +1,51 @@
+from uuid import UUID
+
+from src.domain.shared.entity import Entity
+
+
+class Question(Entity):
+    def __init__(
+            self,
+            text: str,
+            notice: str | None = None,
+            is_answered: bool = False,
+            id_: UUID | None = None
+    ):
+        super().__init__(id_=id_)
+        self._text = text
+        self._notice = notice
+        self._is_answered = is_answered
+
+    # magic methods
+
+    def __str__(self) -> str:
+        return f"{self._text} ({self._notice})"
+
+    # props
+
+    @property
+    def text(self) -> str:
+        return self._text
+
+    @property
+    def notice(self) -> str | None:
+        return self._notice
+
+    @property
+    def is_answered(self) -> bool:
+        return self._is_answered
+
+    # business logic
+
+    def edit(
+            self,
+            new_text: str | None = None,
+            new_notice: str | None = None
+    ) -> None:
+        if new_text:
+            self._text = new_text
+        if new_notice:
+            self._notice = new_notice
+
+    def answer(self) -> None:
+        self._is_answered = True

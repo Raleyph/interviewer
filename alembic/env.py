@@ -5,6 +5,9 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 
 from src.infrastructure.config.settings import get_settings
+from src.infrastructure.persistence.pg.shared import Base
+
+import src.infrastructure.persistence.pg.models # noqa: F401
 
 config = context.config
 
@@ -15,7 +18,7 @@ settings = get_settings()
 
 config.set_main_option("sqlalchemy.url", settings.database_url_sync)
 
-target_metadata = None
+target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
