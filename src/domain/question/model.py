@@ -16,6 +16,11 @@ class Question(Entity):
         self._notice = notice
         self._is_answered = is_answered
 
+    # magic methods
+
+    def __str__(self) -> str:
+        return f"{self._text} ({self._notice})"
+
     # props
 
     @property
@@ -31,6 +36,16 @@ class Question(Entity):
         return self._is_answered
 
     # business logic
+
+    def edit(
+            self,
+            new_text: str | None = None,
+            new_notice: str | None = None
+    ) -> None:
+        if new_text:
+            self._text = new_text
+        if new_notice:
+            self._notice = new_notice
 
     def answer(self) -> None:
         self._is_answered = True

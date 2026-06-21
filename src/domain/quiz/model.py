@@ -1,7 +1,9 @@
 from uuid import UUID
 
 from src.domain.shared.entity import Entity
-from src.domain.quiz.exceptions import QuizAlreadyCompletedException, EmptyQuizException
+from src.domain.quiz.exceptions import (
+    QuestionNotFoundException, QuizAlreadyCompletedException, QuizIsNotCompletedException, EmptyQuizException
+)
 from src.domain.question.model import Question
 
 
@@ -45,9 +47,36 @@ class Quiz(Entity):
 
     # business logic
 
-    def add_question(self, text: str, notice: str | None = None) -> None:
+    def _get_question_by_id(self, question_id: UUID) -> Question:
+        question = next((q for q in self._questions if q.id == question_id), None)
+
+        if not question:
+            raise QuestionNotFoundException()
+
+        return question
+
+    def add_question(
+            self,
+            text: str,
+            notice: str | None = None
+    ) -> None:
         self._ensure_not_completed()
         self._questions.append(Question(text=text, notice=notice))
+
+    def edit_question(
+            self,
+            question_id: UUID,
+            new_text: str | None = None,
+            new_notice: str | None = None
+    ) -> None:
+        self._ensure_not_completed()
+        question = self._get_question_by_id(question_id)
+        question.edit(new_text, new_notice)
+
+    def remove_question(self, question_id: UUID,):
+        self._ensure_not_completed()
+        question = self._get_question_by_id(question_id)
+        self._questions.remove(question)
 
     def change_respondent(self, new_respondent_id: UUID) -> None:
         self._ensure_not_completed()
@@ -55,8 +84,13 @@ class Quiz(Entity):
 
     def complete(self) -> None:
         self._ensure_not_completed()
-        self._ensue_not_empty()
+        self._ensure_not_empty()
         self._is_completed = True
+
+    def answer_question(self, question_id: UUID) -> None:
+        self._ensure_is_completed()
+        question = self._get_question_by_id(question_id)
+        question.answer()
 
     # invariants
 
@@ -64,6 +98,10 @@ class Quiz(Entity):
         if self._is_completed:
             raise QuizAlreadyCompletedException()
 
-    def _ensue_not_empty(self) -> None:
+    def _ensure_is_completed(self) -> None:
+        if not self._is_completed:
+            raise QuizIsNotCompletedException()
+
+    def _ensure_not_empty(self) -> None:
         if not self._questions:
             raise EmptyQuizException()
