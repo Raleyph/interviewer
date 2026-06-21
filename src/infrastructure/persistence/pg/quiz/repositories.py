@@ -35,7 +35,7 @@ class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository):
                 QuizORM.interviewer_id,
                 QuizORM.responder_id,
                 QuizORM.title,
-                QuizORM.is_completed
+                QuizORM.is_published
             )
             .where(QuizORM.id == id_)
         )

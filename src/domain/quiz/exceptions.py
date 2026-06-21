@@ -5,11 +5,11 @@ class QuestionNotFoundException(DomainException):
     pass
 
 
-class QuizAlreadyCompletedException(DomainException):
+class QuizAlreadyPublishedException(DomainException):
     pass
 
 
-class QuizIsNotCompletedException(DomainException):
+class QuizIsNotPublishedException(DomainException):
     pass
 
 

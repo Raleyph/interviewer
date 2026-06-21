@@ -8,4 +8,4 @@ class QuizDetailsDTO(BaseModel):
     interviewer_id: UUID
     responder_id: UUID
     title: str
-    is_completed: bool
+    is_published: bool
