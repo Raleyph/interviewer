@@ -2,7 +2,9 @@ from uuid import UUID
 
 from src.domain.shared.entity import Entity
 from src.domain.quiz.exceptions import (
-    QuestionNotFoundException, QuizAlreadyCompletedException, QuizIsNotCompletedException, EmptyQuizException
+    QuestionNotFoundException,
+    QuizAlreadyCompletedException, QuizIsNotCompletedException,
+    EmptyQuizException, NotEmptyQuizException
 )
 from src.domain.question.model import Question
 
@@ -30,6 +32,10 @@ class Quiz(Entity):
     @property
     def respondent_id(self) -> UUID:
         return self._respondent_id
+
+    @property
+    def is_completed(self) -> bool:
+        return self._is_completed
 
     @property
     def questions(self) -> tuple[Question, ...]:
@@ -82,6 +88,11 @@ class Quiz(Entity):
         self._ensure_not_completed()
         self._respondent_id = new_respondent_id
 
+    def restore_questions(self, questions: list[Question]) -> None:
+        self._ensure_not_completed()
+        self._ensure_is_empty()
+        self._questions = questions
+
     def complete(self) -> None:
         self._ensure_not_completed()
         self._ensure_not_empty()
@@ -105,3 +116,7 @@ class Quiz(Entity):
     def _ensure_not_empty(self) -> None:
         if not self._questions:
             raise EmptyQuizException()
+
+    def _ensure_is_empty(self) -> None:
+        if self._questions:
+            raise NotEmptyQuizException()

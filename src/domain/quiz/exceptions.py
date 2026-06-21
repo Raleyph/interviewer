@@ -15,3 +15,7 @@ class QuizIsNotCompletedException(DomainException):
 
 class EmptyQuizException(DomainException):
     pass
+
+
+class NotEmptyQuizException(DomainException):
+    pass
