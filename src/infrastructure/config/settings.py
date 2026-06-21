@@ -4,6 +4,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    # Application
+    AUTH_MODE: str = "fake"
+
     # PostgreSQL
     POSTGRES_HOST: str
     POSTGRES_PORT: int = 5432

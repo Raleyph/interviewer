@@ -11,6 +11,7 @@ class QuizORM(Base):
 
     interviewer_id: Mapped[UUID] = mapped_column(nullable=False)
     responder_id: Mapped[UUID] = mapped_column(nullable=False)
+    title: Mapped[str] = mapped_column(nullable=False)
 
     is_completed: Mapped[bool] = mapped_column(default=False, nullable=False)
 

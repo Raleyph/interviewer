@@ -1,4 +1,4 @@
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from src.application.shared.interfaces import IUnitOfWork, IDbContext
 
@@ -6,7 +6,7 @@ from src.infrastructure.persistence.pg.db_context import PostgreSqlDbContext
 
 
 class PostgreSqlUnitOfWork(IUnitOfWork):
-    def __init__(self, session_factory):
+    def __init__(self, session_factory: async_sessionmaker[AsyncSession]):
         self._session_factory = session_factory
         self._session: AsyncSession | None = None
         self._context: PostgreSqlDbContext | None = None

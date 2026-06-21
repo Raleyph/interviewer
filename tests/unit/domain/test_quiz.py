@@ -8,7 +8,7 @@ from src.domain.quiz.exceptions import QuestionNotFoundException
 
 @pytest.fixture
 def empty_quiz():
-    return Quiz.create(interviewer_id=uuid4(), respondent_id=uuid4())
+    return Quiz.create(interviewer_id=uuid4(), respondent_id=uuid4(), title="Test quiz")
 
 
 @pytest.fixture

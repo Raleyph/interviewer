@@ -14,12 +14,14 @@ class Quiz(Entity):
             self,
             interviewer_id: UUID,
             respondent_id: UUID,
+            title: str,
             is_completed: bool = False,
             id_: UUID | None = None
     ):
         super().__init__(id_=id_)
         self._interviewer_id = interviewer_id
         self._respondent_id = respondent_id
+        self._title = title
         self._is_completed = is_completed
         self._questions: list[Question] = []
 
@@ -34,6 +36,10 @@ class Quiz(Entity):
         return self._respondent_id
 
     @property
+    def title(self) -> str:
+        return self._title
+
+    @property
     def is_completed(self) -> bool:
         return self._is_completed
 
@@ -44,10 +50,11 @@ class Quiz(Entity):
     # factory
 
     @classmethod
-    def create(cls, interviewer_id: UUID, respondent_id: UUID) -> "Quiz":
+    def create(cls, interviewer_id: UUID, respondent_id: UUID, title: str) -> "Quiz":
         return cls(
             interviewer_id=interviewer_id,
             respondent_id=respondent_id,
+            title=title,
             is_completed=False
         )
 
