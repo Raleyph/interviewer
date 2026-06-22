@@ -18,5 +18,5 @@ class PostgreSqlDbContext:
         return UserRepository(self._session)
 
     @cached_property
-    def quizzies(self) -> IQuizRepository:
+    def quizzes(self) -> IQuizRepository:
         return QuizRepository(self._session)

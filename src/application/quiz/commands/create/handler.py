@@ -3,7 +3,7 @@ from uuid import UUID
 from src.domain.quiz import Quiz
 
 from src.application.shared.interfaces import ICommandHandler, IUnitOfWork
-from src.application.quiz.create.command import CreateQuizCommand
+from src.application.quiz.commands.create.command import CreateQuizCommand
 from src.application.user.read_repository import IUserReadRepository
 
 
@@ -29,6 +29,6 @@ class CreateQuizCommandHandler(ICommandHandler[CreateQuizCommand, UUID]):
                 title=command.title
             )
 
-            await self._uow.context.quizzies.add(quiz)
+            await self._uow.context.quizzes.add(quiz)
 
             return quiz.id

@@ -1,7 +1,7 @@
 from src.application.shared.interfaces import IQueryHandler
 from src.application.quiz.read_repository import IQuizReadRepository
-from src.application.quiz.get_by_id.query import GetQuizByIdQuery
-from src.application.quiz.get_by_id.dto import QuizDetailsDTO
+from src.application.quiz.queries.get_by_id.query import GetQuizByIdQuery
+from src.application.quiz.queries.get_by_id.dto import QuizDetailsDTO
 
 
 class GetQuizByIdQueryHandler(IQueryHandler[GetQuizByIdQuery, QuizDetailsDTO]):

@@ -12,9 +12,9 @@ class QuizMapper:
         quiz = Quiz(
             id_=model.id,
             interviewer_id=model.interviewer_id,
-            respondent_id=model.responder_id,
+            respondent_id=model.respondent_id,
             title=model.title,
-            is_completed=model.is_completed
+            is_published=model.is_published
         )
 
         questions = [
@@ -24,7 +24,7 @@ class QuizMapper:
                 notice=question_data["notice"],
                 is_answered=question_data["is_answered"]
             )
-            for question_data in model.questions_json
+            for question_data in model.questions_json or []
         ]
 
         quiz.restore_questions(questions)
@@ -45,7 +45,7 @@ class QuizMapper:
 
         model.id = entity.id
         model.interviewer_id = entity.interviewer_id
-        model.responder_id = entity.respondent_id
+        model.respondent_id = entity.respondent_id
         model.title = entity.title
-        model.is_completed = entity.is_completed
+        model.is_published = entity.is_published
         model.questions_json = questions_json
