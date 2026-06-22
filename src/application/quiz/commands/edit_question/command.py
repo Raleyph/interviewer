@@ -6,5 +6,5 @@ from uuid import UUID
 class EditQuizQuestionCommand:
     quiz_id: UUID
     question_id: UUID
-    new_text: str | None = None
-    new_notice: str | None = None
+    text: str | None = None
+    notice: str | None = None

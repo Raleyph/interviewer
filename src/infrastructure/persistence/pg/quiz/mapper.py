@@ -12,7 +12,7 @@ class QuizMapper:
         quiz = Quiz(
             id_=model.id,
             interviewer_id=model.interviewer_id,
-            respondent_id=model.responder_id,
+            respondent_id=model.respondent_id,
             title=model.title,
             is_published=model.is_published
         )
@@ -45,7 +45,7 @@ class QuizMapper:
 
         model.id = entity.id
         model.interviewer_id = entity.interviewer_id
-        model.responder_id = entity.respondent_id
+        model.respondent_id = entity.respondent_id
         model.title = entity.title
         model.is_published = entity.is_published
         model.questions_json = questions_json

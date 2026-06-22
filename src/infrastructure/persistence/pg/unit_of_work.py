@@ -12,7 +12,9 @@ class PostgreSqlUnitOfWork(IUnitOfWork):
         self._context: PostgreSqlDbContext | None = None
 
     @property
-    def context(self) -> IDbContext | None:
+    def context(self) -> IDbContext:
+        if self._context is None:
+            raise RuntimeError("UnitOfWork is not started")
         return self._context
 
     async def __aenter__(self) -> "PostgreSqlUnitOfWork":

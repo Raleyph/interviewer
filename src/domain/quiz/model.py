@@ -72,9 +72,13 @@ class Quiz(Entity):
             self,
             text: str,
             notice: str | None = None
-    ) -> None:
+    ) -> UUID:
         self._ensure_not_published()
-        self._questions.append(Question(text=text, notice=notice))
+
+        question = Question(text=text, notice=notice)
+        self._questions.append(question)
+
+        return question.id
 
     def edit_question(
             self,

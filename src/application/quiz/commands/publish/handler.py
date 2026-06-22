@@ -5,6 +5,7 @@ from src.application.shared.interfaces import ICommandHandler
 
 class PublishQuizCommandHandler(BaseQuizCommandHandler, ICommandHandler[PublishQuizCommand, None]):
     async def handle(self, command: PublishQuizCommand) -> None:
-        quiz = await self._get_quiz(command.quiz_id)
-        quiz.publish()
-        await self._save_quiz(quiz)
+        async with self._uow:
+            quiz = await self._get_quiz(command.quiz_id)
+            quiz.publish()
+            await self._save_quiz(quiz)

@@ -3,6 +3,7 @@ from uuid import UUID
 
 
 @dataclass(frozen=True)
-class ChangeQuizRespondentCommand:
+class UpdateQuizCommand:
     quiz_id: UUID
-    new_respondent_id: UUID
+    respondent_id: UUID | None = None
+    title: str | None = None

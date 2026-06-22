@@ -35,13 +35,13 @@ class QuizRepository(PostgreSqlRepository, IQuizRepository):
         QuizMapper.apply_to_model(entity, model)
 
 
-class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository):
+class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository[QuizDetailsDTO]):
     async def get_by_id(self, id_: UUID) -> QuizDetailsDTO | None:
         stmt = (
             select(
                 QuizORM.id,
                 QuizORM.interviewer_id,
-                QuizORM.responder_id,
+                QuizORM.respondent_id,
                 QuizORM.title,
                 QuizORM.is_published
             )
