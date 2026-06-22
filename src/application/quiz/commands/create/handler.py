@@ -3,7 +3,7 @@ from uuid import UUID
 from src.domain.quiz import Quiz
 
 from src.application.shared.interfaces import ICommandHandler, IUnitOfWork
-from src.application.quiz.create.command import CreateQuizCommand
+from src.application.quiz.commands.create.command import CreateQuizCommand
 from src.application.user.read_repository import IUserReadRepository
 
 

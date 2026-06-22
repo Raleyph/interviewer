@@ -1,7 +1,7 @@
 from typing import Protocol
 from uuid import UUID
 
-from src.application.quiz.get_by_id.dto import QuizDetailsDTO
+from src.application.quiz.queries.get_by_id.dto import QuizDetailsDTO
 
 
 class IQuizReadRepository(Protocol):

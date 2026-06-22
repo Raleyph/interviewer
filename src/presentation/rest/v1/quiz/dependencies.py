@@ -3,8 +3,8 @@ from typing import Annotated
 from fastapi import Depends
 
 from src.application.quiz.read_repository import IQuizReadRepository
-from src.application.quiz.create.handler import CreateQuizCommandHandler
-from src.application.quiz.get_by_id.handler import GetQuizByIdQueryHandler
+from src.application.quiz.commands.create import CreateQuizCommandHandler
+from src.application.quiz.queries.get_by_id.handler import GetQuizByIdQueryHandler
 
 from src.infrastructure.persistence.pg.quiz.repositories import QuizReadRepository
 

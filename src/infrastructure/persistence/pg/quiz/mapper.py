@@ -24,7 +24,7 @@ class QuizMapper:
                 notice=question_data["notice"],
                 is_answered=question_data["is_answered"]
             )
-            for question_data in model.questions_json
+            for question_data in model.questions_json or []
         ]
 
         quiz.restore_questions(questions)

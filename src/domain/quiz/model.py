@@ -91,14 +91,18 @@ class Quiz(Entity):
         question = self._get_question_by_id(question_id)
         self._questions.remove(question)
 
-    def change_respondent(self, new_respondent_id: UUID) -> None:
-        self._ensure_not_published()
-        self._respondent_id = new_respondent_id
-
     def restore_questions(self, questions: list[Question]) -> None:
         self._ensure_not_published()
         self._ensure_is_empty()
         self._questions = questions
+
+    def change_respondent(self, new_respondent_id: UUID) -> None:
+        self._ensure_not_published()
+        self._respondent_id = new_respondent_id
+
+    def rename(self, new_title: str) -> None:
+        self._ensure_not_published()
+        self._title = new_title
 
     def publish(self) -> None:
         self._ensure_not_published()

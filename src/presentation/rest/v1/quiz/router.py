@@ -2,8 +2,8 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from src.application.quiz.create.command import CreateQuizCommand
-from src.application.quiz.get_by_id.query import GetQuizByIdQuery
+from src.application.quiz.commands.create.command import CreateQuizCommand
+from src.application.quiz.queries.get_by_id.query import GetQuizByIdQuery
 
 from src.presentation.rest.v1.quiz.schemas import CreateQuizSchema
 from src.presentation.rest.v1.quiz.dependencies import CreateQuizHandlerDep, GetQuizByIdHandlerDep

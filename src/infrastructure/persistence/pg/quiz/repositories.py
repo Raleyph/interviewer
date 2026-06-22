@@ -5,7 +5,7 @@ from sqlalchemy import select
 from src.domain.quiz import Quiz, IQuizRepository
 
 from src.application.quiz.read_repository import IQuizReadRepository
-from src.application.quiz.get_by_id.dto import QuizDetailsDTO
+from src.application.quiz.queries.get_by_id.dto import QuizDetailsDTO
 
 from src.infrastructure.persistence.pg.shared import PostgreSqlRepository
 from src.infrastructure.persistence.pg.quiz.model import QuizORM
@@ -25,6 +25,14 @@ class QuizRepository(PostgreSqlRepository, IQuizRepository):
         model = QuizORM()
         QuizMapper.apply_to_model(entity, model)
         self._session.add(model)
+
+    async def save(self, entity: Quiz) -> None:
+        model: QuizORM | None = await self._session.get(QuizORM, entity.id)
+
+        if model is None:
+            raise
+
+        QuizMapper.apply_to_model(entity, model)
 
 
 class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository):
