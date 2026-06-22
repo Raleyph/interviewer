@@ -4,6 +4,7 @@ from fastapi import APIRouter, status
 
 from src.application.quiz.commands.create import CreateQuizCommand
 from src.application.quiz.commands.update import UpdateQuizCommand
+from src.application.quiz.commands.delete import DeleteQuizCommand
 from src.application.quiz.commands.publish import PublishQuizCommand
 from src.application.quiz.commands.add_question import AddQuizQuestionCommand
 from src.application.quiz.commands.edit_question import EditQuizQuestionCommand
@@ -25,6 +26,7 @@ from src.presentation.rest.v1.quiz.schemas import (
 from src.presentation.rest.v1.quiz.dependencies import (
     CreateQuizHandlerDep,
     UpdateQuizHandlerDep,
+    DeleteQuizHandlerDep,
     PublishQuizHandlerDep,
     AddQuizQuestionHandlerDep,
     EditQuizQuestionHandlerDep,
@@ -70,6 +72,18 @@ async def update_quiz(
         respondent_id=schema.respondent_id
     )
 
+    await handler.handle(command)
+
+
+@router.delete(
+    "/{quiz_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def delete_quiz(
+        quiz_id: UUID,
+        handler: DeleteQuizHandlerDep
+):
+    command = DeleteQuizCommand(quiz_id=quiz_id)
     await handler.handle(command)
 
 

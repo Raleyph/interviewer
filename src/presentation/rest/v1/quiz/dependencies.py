@@ -6,6 +6,7 @@ from src.application.quiz.read_repository import IQuizReadRepository
 
 from src.application.quiz.commands.create import CreateQuizCommandHandler
 from src.application.quiz.commands.update import UpdateQuizCommandHandler
+from src.application.quiz.commands.delete import DeleteQuizCommandHandler
 from src.application.quiz.commands.publish import PublishQuizCommandHandler
 from src.application.quiz.commands.add_question import AddQuizQuestionCommandHandler
 from src.application.quiz.commands.edit_question import EditQuizQuestionCommandHandler
@@ -37,6 +38,10 @@ def get_update_quiz_handler(uow: UowDep) -> UpdateQuizCommandHandler:
     return UpdateQuizCommandHandler(uow)
 
 
+def get_delete_quiz_handler(uow: UowDep) -> DeleteQuizCommandHandler:
+    return DeleteQuizCommandHandler(uow)
+
+
 def get_publish_quiz_handler(uow: UowDep) -> PublishQuizCommandHandler:
     return PublishQuizCommandHandler(uow)
 
@@ -63,6 +68,7 @@ def get_get_by_id_quiz_handler(
 
 CreateQuizHandlerDep = Annotated[CreateQuizCommandHandler, Depends(get_create_quiz_handler)]
 UpdateQuizHandlerDep = Annotated[UpdateQuizCommandHandler, Depends(get_update_quiz_handler)]
+DeleteQuizHandlerDep = Annotated[DeleteQuizCommandHandler, Depends(get_delete_quiz_handler)]
 PublishQuizHandlerDep = Annotated[PublishQuizCommandHandler, Depends(get_publish_quiz_handler)]
 AddQuizQuestionHandlerDep = Annotated[AddQuizQuestionCommandHandler, Depends(get_add_quiz_question_handler)]
 EditQuizQuestionHandlerDep = Annotated[EditQuizQuestionCommandHandler, Depends(get_edit_quiz_question_handler)]

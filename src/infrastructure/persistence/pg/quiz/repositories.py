@@ -13,8 +13,12 @@ from src.infrastructure.persistence.pg.quiz.mapper import QuizMapper
 
 
 class QuizRepository(PostgreSqlRepository, IQuizRepository):
-    async def get_by_id(self, id_: UUID) -> Quiz | None:
+    async def _get_orm_by_id(self, id_: UUID) -> QuizORM | None:
         model: QuizORM | None = await self._session.get(QuizORM, id_)
+        return model
+
+    async def get_by_id(self, id_: UUID) -> Quiz | None:
+        model = await self._get_orm_by_id(id_)
 
         if model is None:
             return None
@@ -27,12 +31,20 @@ class QuizRepository(PostgreSqlRepository, IQuizRepository):
         self._session.add(model)
 
     async def save(self, entity: Quiz) -> None:
-        model: QuizORM | None = await self._session.get(QuizORM, entity.id)
+        model = await self._get_orm_by_id(entity.id)
 
         if model is None:
             raise
 
         QuizMapper.apply_to_model(entity, model)
+
+    async def delete(self, id_: UUID) -> None:
+        model = await self._get_orm_by_id(id_)
+
+        if model is None:
+            raise
+
+        await self._session.delete(model)
 
 
 class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository[QuizDetailsDTO]):
