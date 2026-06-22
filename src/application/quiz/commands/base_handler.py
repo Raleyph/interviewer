@@ -10,7 +10,7 @@ class BaseQuizCommandHandler:
         self._uow = uow
 
     async def _get_quiz(self, quiz_id: UUID) -> Quiz:
-        quiz = await self._uow.context.quizzies.get_by_id(quiz_id)
+        quiz = await self._uow.context.quizzes.get_by_id(quiz_id)
 
         if quiz is None:
             raise
@@ -18,4 +18,4 @@ class BaseQuizCommandHandler:
         return quiz
 
     async def _save_quiz(self, quiz: Quiz) -> None:
-        await self._uow.context.quizzies.save(quiz)
+        await self._uow.context.quizzes.save(quiz)

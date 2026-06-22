@@ -29,6 +29,6 @@ class CreateQuizCommandHandler(ICommandHandler[CreateQuizCommand, UUID]):
                 title=command.title
             )
 
-            await self._uow.context.quizzies.add(quiz)
+            await self._uow.context.quizzes.add(quiz)
 
             return quiz.id
