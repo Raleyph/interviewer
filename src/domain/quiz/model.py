@@ -90,7 +90,7 @@ class Quiz(Entity):
         question = self._get_question_by_id(question_id)
         question.edit(new_text, new_notice)
 
-    def remove_question(self, question_id: UUID,):
+    def remove_question(self, question_id: UUID):
         self._ensure_not_published()
         question = self._get_question_by_id(question_id)
         self._questions.remove(question)

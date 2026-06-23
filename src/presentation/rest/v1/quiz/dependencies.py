@@ -16,8 +16,7 @@ from src.application.quiz.queries.get_by_id import GetQuizByIdQueryHandler
 
 from src.infrastructure.persistence.pg.quiz.repositories import QuizReadRepository
 
-from src.presentation.rest.v1.shared.unit_of_work import UowDep
-from src.presentation.rest.v1.shared.database import SessionDep
+from src.presentation.rest.v1.shared.dependencies import SessionDep, UowDep
 from src.presentation.rest.v1.user.dependencies import UserReadRepositoryDep
 
 
