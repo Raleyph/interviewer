@@ -6,6 +6,7 @@ from src.application.quiz.commands.create import CreateQuizCommand
 from src.application.quiz.commands.update import UpdateQuizCommand
 from src.application.quiz.commands.delete import DeleteQuizCommand
 from src.application.quiz.commands.publish import PublishQuizCommand
+from src.application.quiz.commands.rollback import RollbackQuizCommand
 from src.application.quiz.commands.add_question import AddQuizQuestionCommand
 from src.application.quiz.commands.edit_question import EditQuizQuestionCommand
 from src.application.quiz.commands.remove_question import RemoveQuizQuestionCommand
@@ -28,6 +29,7 @@ from src.presentation.rest.v1.quiz.dependencies import (
     UpdateQuizHandlerDep,
     DeleteQuizHandlerDep,
     PublishQuizHandlerDep,
+    RollbackQuizHandlerDep,
     AddQuizQuestionHandlerDep,
     EditQuizQuestionHandlerDep,
     RemoveQuizQuestionHandlerDep,
@@ -96,6 +98,18 @@ async def publish_quiz(
         handler: PublishQuizHandlerDep
 ):
     command = PublishQuizCommand(quiz_id=quiz_id)
+    await handler.handle(command)
+
+
+@router.post(
+    "/{quiz_id}/rollback",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def rollback_quiz(
+        quiz_id: UUID,
+        handler: RollbackQuizHandlerDep
+):
+    command = RollbackQuizCommand(quiz_id=quiz_id)
     await handler.handle(command)
 
 
