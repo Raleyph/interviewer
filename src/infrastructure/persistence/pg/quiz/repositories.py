@@ -56,7 +56,9 @@ class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository[QuizDetailsDT
                 QuizORM.interviewer_id,
                 QuizORM.respondent_id,
                 QuizORM.title,
-                QuizORM.is_published
+                QuizORM.is_published,
+                QuizORM.published_at,
+                QuizORM.current_question_id
             )
             .where(QuizORM.id == id_)
         )
