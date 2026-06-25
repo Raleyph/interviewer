@@ -14,7 +14,9 @@ class QuizMapper:
             interviewer_id=model.interviewer_id,
             respondent_id=model.respondent_id,
             title=model.title,
-            is_published=model.is_published
+            is_published=model.is_published,
+            published_at=model.published_at,
+            current_question_id=model.current_question_id
         )
 
         questions = [
@@ -22,7 +24,7 @@ class QuizMapper:
                 id_=UUID(question_data["id"]),
                 text=question_data["text"],
                 notice=question_data["notice"],
-                is_answered=question_data["is_answered"]
+                status=question_data["status"]
             )
             for question_data in model.questions_json or []
         ]
@@ -38,7 +40,7 @@ class QuizMapper:
                 "id": str(question.id),
                 "text": question.text,
                 "notice": question.notice,
-                "is_answered": question.is_answered
+                "status": question.status
             }
             for question in entity.questions
         ]
@@ -49,3 +51,4 @@ class QuizMapper:
         model.title = entity.title
         model.is_published = entity.is_published
         model.questions_json = questions_json
+        model.published_at = entity.published_at

@@ -19,3 +19,11 @@ class EmptyQuizException(DomainException):
 
 class NotEmptyQuizException(DomainException):
     pass
+
+
+class QuestionAlreadyOpenedException(DomainException):
+    pass
+
+
+class QuizIsAlreadyViewedException(DomainException):
+    pass
