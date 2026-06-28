@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from src.application.quiz.exceptions import QuizNotFoundError
 from src.domain.quiz import Quiz
 
 from src.application.shared.interfaces import IUnitOfWork
@@ -13,7 +14,7 @@ class BaseQuizCommandHandler:
         quiz = await self._uow.context.quizzes.get_by_id(quiz_id)
 
         if quiz is None:
-            raise
+            raise QuizNotFoundError()
 
         return quiz
 

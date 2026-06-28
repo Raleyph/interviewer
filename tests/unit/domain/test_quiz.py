@@ -27,7 +27,6 @@ class TestQuizAddQuestion:
         added_question = empty_quiz.questions[0]
 
         assert added_question.text == question_text
-        assert added_question.is_answered is False
 
 
 class TestQuizRemoveQuestion:

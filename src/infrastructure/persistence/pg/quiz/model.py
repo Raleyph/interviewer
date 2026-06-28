@@ -1,6 +1,7 @@
 from uuid import UUID
+from datetime import datetime
 
-from sqlalchemy import JSON
+from sqlalchemy import JSON, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.infrastructure.persistence.pg.shared import Base
@@ -19,3 +20,6 @@ class QuizORM(Base):
         default=list,
         nullable=False
     )
+
+    published_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
+    current_question_id: Mapped[UUID] = mapped_column(nullable=True)

@@ -5,6 +5,7 @@ from src.domain.quiz import Quiz
 from src.application.shared.interfaces import ICommandHandler, IUnitOfWork
 from src.application.quiz.commands.create.command import CreateQuizCommand
 from src.application.user.read_repository import IUserReadRepository
+from src.application.user.exceptions import UserNotFoundError
 
 
 class CreateQuizCommandHandler(ICommandHandler[CreateQuizCommand, UUID]):
@@ -21,7 +22,7 @@ class CreateQuizCommandHandler(ICommandHandler[CreateQuizCommand, UUID]):
             respondent = await self._user_read_repository.get_by_username(command.respondent_username)
 
             if respondent is None:
-                raise
+                raise UserNotFoundError()
 
             quiz = Quiz.create(
                 interviewer_id=command.interviewer_id,

@@ -1,6 +1,9 @@
+from datetime import datetime
 from uuid import UUID
 
 from src.domain.shared.entity import Entity
+from src.domain.question.enums import QuestionStatus
+from src.domain.question.exceptions import InvalidQuestionStateException
 
 
 class Question(Entity):
@@ -8,13 +11,14 @@ class Question(Entity):
             self,
             text: str,
             notice: str | None = None,
-            is_answered: bool = False,
+            status: QuestionStatus = QuestionStatus.NEW,
             id_: UUID | None = None
     ):
         super().__init__(id_=id_)
         self._text = text
         self._notice = notice
-        self._is_answered = is_answered
+        self._status = status
+        self._opened_at: datetime | None = None
 
     # magic methods
 
@@ -32,8 +36,26 @@ class Question(Entity):
         return self._notice
 
     @property
-    def is_answered(self) -> bool:
-        return self._is_answered
+    def status(self) -> QuestionStatus:
+        return self._status
+
+    @property
+    def is_new(self) -> bool:
+        return self._status == QuestionStatus.NEW
+
+    @property
+    def is_opened(self) -> bool:
+        return self._status == QuestionStatus.OPENED
+
+    # factory
+
+    @classmethod
+    def create(cls, text: str, notice: str | None = None) -> "Question":
+        return cls(
+            text=text,
+            notice=notice,
+            status=QuestionStatus.NEW
+        )
 
     # business logic
 
@@ -47,5 +69,15 @@ class Question(Entity):
         if new_notice:
             self._notice = new_notice
 
-    def answer(self) -> None:
-        self._is_answered = True
+    def open(self, now: datetime) -> None:
+        if self._status != QuestionStatus.NEW:
+            raise InvalidQuestionStateException()
+
+        self._status = QuestionStatus.OPENED
+        self._opened_at = now
+
+    def answer(self):
+        if self._status != QuestionStatus.OPENED:
+            raise InvalidQuestionStateException()
+
+        self._status = QuestionStatus.ANSWERED

@@ -3,6 +3,5 @@ from uuid import UUID
 
 
 @dataclass(frozen=True)
-class AnswerQuizQuestionCommand:
+class RollbackQuizCommand:
     quiz_id: UUID
-    question_id: UUID

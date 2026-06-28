@@ -10,6 +10,7 @@ from src.application.quiz.queries.get_by_id.dto import QuizDetailsDTO
 from src.infrastructure.persistence.pg.shared import PostgreSqlRepository
 from src.infrastructure.persistence.pg.quiz.model import QuizORM
 from src.infrastructure.persistence.pg.quiz.mapper import QuizMapper
+from src.infrastructure.persistence.exceptions import EntityNotFoundForSaveError
 
 
 class QuizRepository(PostgreSqlRepository, IQuizRepository):
@@ -34,15 +35,15 @@ class QuizRepository(PostgreSqlRepository, IQuizRepository):
         model = await self._get_orm_by_id(entity.id)
 
         if model is None:
-            raise
+            raise EntityNotFoundForSaveError(entity.id)
 
         QuizMapper.apply_to_model(entity, model)
 
-    async def delete(self, id_: UUID) -> None:
-        model = await self._get_orm_by_id(id_)
+    async def delete(self, entity: Quiz) -> None:
+        model = await self._get_orm_by_id(entity.id)
 
         if model is None:
-            raise
+            return
 
         await self._session.delete(model)
 
@@ -55,7 +56,9 @@ class QuizReadRepository(PostgreSqlRepository, IQuizReadRepository[QuizDetailsDT
                 QuizORM.interviewer_id,
                 QuizORM.respondent_id,
                 QuizORM.title,
-                QuizORM.is_published
+                QuizORM.is_published,
+                QuizORM.published_at,
+                QuizORM.current_question_id
             )
             .where(QuizORM.id == id_)
         )

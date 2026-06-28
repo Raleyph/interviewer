@@ -2,6 +2,7 @@ from src.application.shared.interfaces import IQueryHandler
 from src.application.quiz.read_repository import IQuizReadRepository
 from src.application.quiz.queries.get_by_id.query import GetQuizByIdQuery
 from src.application.quiz.queries.get_by_id.dto import QuizDetailsDTO
+from src.application.quiz.exceptions import QuizNotFoundError
 
 
 class GetQuizByIdQueryHandler(IQueryHandler[GetQuizByIdQuery, QuizDetailsDTO]):
@@ -12,6 +13,6 @@ class GetQuizByIdQueryHandler(IQueryHandler[GetQuizByIdQuery, QuizDetailsDTO]):
         quiz = await self._read_repository.get_by_id(query.quiz_id)
 
         if quiz is None:
-            raise
+            raise QuizNotFoundError()
 
         return quiz

@@ -1,5 +1,8 @@
+from src.domain.shared.enums import ErrorCode
+
+
 class DomainException(Exception):
-    error_code: str = "DOMAIN_ERROR"
+    error_code: ErrorCode
     message: str = "Internal business error"
 
     def __init__(self, message: str | None = None):
